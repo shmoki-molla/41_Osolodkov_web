@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Коровий АНТИпереворачиватель 3000™ - Реклама</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Коровий АНТИпереворачиватель 3000™</h1>
+        <p>Надоело, что ваших коров переворачивают всякие негодяи? Есть решение!</p>
+    </header>
+
+    <div class="popup" id="popup">
+        <img src="реклама.jpeg" alt="Реклама">
+        <button onclick="closePopup('popup')">Закрыть</button>
+    </div>
+
+    <div class="popup" id="popup1">
+        <img src="коровааниме.jpeg" alt="Реклама1">
+        <button onclick="closePopup('popup1')">Закрыть</button>
+    </div>
+
+    <div class="popup" id="popup2">
+        <img src="киборгкорова.png" alt="Реклама2">
+        <button onclick="closePopup('popup2')">Закрыть</button>
+    </div>
+
+    <div 
+        class="blinking-text">ТОРОПИТЕСЬ! АКЦИЯ! СКИДКИ 99.99%!
+    </div>
+
+    <script>
+        setTimeout(function() {
+            document.getElementById('popup').style.display = 'block';
+        }, 5000);
+
+        setTimeout(function() {
+            document.getElementById('popup1').style.display = 'block';
+        }, 5000);
+        setTimeout(function() {
+            document.getElementById('popup2').style.display = 'block';
+        }, 5000);
+    
+        function closePopup(popupId) {
+            document.getElementById(popupId).style.display = 'none';
+        }
+    </script>
+
+    <section class="top-reasons">
+        <h2>Топ-5 причин, почему вам нужен Коровий АНТИпереворачиватель 3000™</h2>
+        <ol>
+            <li>✅  Экономит ваше драгоценное время!</li>
+            <li>✅  Пидиди сядет в тюрьму</li>
+            <li>✅  Соседи обзавидуются!</li>
+            <li>✅  Улучшает карму! (Не доказано)</li>
+            <li>✅  Поддерживает отечественного производителя! ZZZ</li>
+        </ol>
+    </section>
+
+    <section class="slogan">
+        <h2>Коровий АНТИпереворачиватель 3000™ - Давайте перевернем мир, а не коров!!!</h2>
+    </section>
+
+    <div class="marquee-container">
+            <div class="marquee">
+                <span>АКЦИЯ!!! Купи 2 антипереворачивателя И ПОЛУЧИ!! Я не знаю, что именно, но что-нибудь получишь мб.</span>
+            </div>
+    </div>
+
+    <section class="testimonials">
+        <h2>Отзывы счастливых (и не очень) пользователей:</h2>
+        <div class="testimonial">
+            <p>"Отличное изобретение!! Жалко стоит, как ввп Таджикистана, но да ладно"</p>
+            <p class="author">- Фермер Михаил</p>
+        </div>
+        <div class="testimonial">
+            <p>"أنا أوزبكي بسيط ، ساعدني"</p>
+            <p class="author">- بشكيرين</p>
+        </div>
+        <div class="testimonial">
+            <p>"Отзыв сверху меня напрягает"</p>
+            <p class="author">- Отзыв снизу</p>
+        </div>
+    </section>
+
+    <aside class="sidebar">
+        <div class="ad">
+            <h3>Только сегодня!</h3>
+            <p>Купи два Коровьих АНТИпереворачивателя и получи третий... сломанный!</p>
+            <img src="korovi.jpg" alt="Корова в полете">
+        </div>
+        <div class="ad">
+            <h3>Устали от коров?</h3>
+            <p>Купите робота-пылесоса! Он точно не будет переворачивать коров.</p>
+            <img src="pilesos.jpg" alt="Робот-пылесос">
+        </div>
+    </aside>
+
+
+
+    <footer>
+        <p>&copy; 2025 Коровий АНТИпереворачиватель Inc. Все права защищены (или нет...).</p>
+        <p>Внимание! Коровий АНТИпереворачиватель может привести к непредвиденным последствиям. Используйте на свой страх и риск.</p>
+    </footer>
+    <script>
+        setInterval(function(){ location.reload(); }, 30000);
+    </script>
+</body>
+</html>
