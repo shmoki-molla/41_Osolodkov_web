@@ -1,3 +1,5 @@
+@import url("reset.css");
+
 body {
     font-family: sans-serif;
     margin: 0;
@@ -34,7 +36,7 @@ header {
 }
 
 .slogan {
-    background-color: #135dd5;
+    background-color: #ca19a1;
     text-align: center;
     padding: 30px;
     font-style: italic;
@@ -77,6 +79,7 @@ header {
     max-width: 100%;
     height: auto;
 }
+
 
 footer {
     background-color: #333;
