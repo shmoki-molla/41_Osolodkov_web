@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Веб - Кринж</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+    <header>
+        <h1>Веб - Кринж</h1>
+    </header>
+
+    <main>
+        <section id="game-section">
+            <h2>Игра: Камень, ножницы, бумага и еще кое-что...</h2>
+            <div class="game-choices">
+                <button onclick="playGame('камень')"><img src="img/stone.jpg" alt="Камень"></button>
+                <button onclick="playGame('ножницы')"><img src="img/scissors.jpg" alt="Ножницы"></button>
+                <button onclick="playGame('бумага')"><img src="img/paper.jpg" alt="Бумага"></button>
+            </div>
+            <div id="game-result"></div>
+            <div id="computer-choice">
+                <img id="computer-choice-img" src="" alt="Выбор компьютера" style="display: none; width: 100px; height: auto; margin-top: 20px;">
+            </div>
+        </section>
+
+        <section>
+            <h2>Топ 5 смешных фактов/случаев из жизни</h2>
+            <ol>
+                <li class="fact">Однажды в лесу я повздорил с пьяным быдланом. На следующий день я узнал, что это мой куратор.</li>
+                <li class="fact">Однажды в том же лесу я наехал на девушку, которая создавала панику вокруг пьяной девочки. На следующий день я узнал, что это мой второй куратор.</li>
+                <li class="fact">В детском саду мне на руку упала лавка и я получил перелом лучевой кости.</li>
+                <li class="fact">я хз честно.</li>
+                <li class="fact">Однажды в саду брат сказал мне быть аккуратнее. Я сказал ему "да иди ты в ж.." и провалился в погреб на 3 метра.</li>
+            </ol>
+        </section>
+
+        <section>
+            <h2>Обзор последнего просмотренного фильма/сериала</h2>
+            <article class="movie-review">
+                <h3>Фильм "Носферату" (2024г)</h3>
+                <img src="nosferatu.jpg" alt="Обложка фильма Носферату" class="nosf-img" width="300">
+                <p>Недавно посмотрел новый фильм Роберта Эггерса "Носферату". Он является ремейком оригинального фильма 1922 года. На кинопоиске оценка 6,7 из 10, но челы просто не выкупили реально..</p>
+                <p>Очень сильно погружает атмосферу ужаса, который испытывали люди тех времен к потусторонней силе. Да и актеры играют весьма убедительно.</p>
+            </article>
+        </section>
+
+        <section>
+            <h2>Цитаты из фильма под номером 41 в топе IMDB (на данный момент - "Американская история Икс")</h2>
+            <img src="x.jpg" alt="Обложка фильма Американская история Икс" width="300">
+            <blockquote class="quote">
+                - Мы не враги, но нас учили враждовать
+            </blockquote>
+            <blockquote class="quote">
+                - Ненависть — это багаж. Жизнь слишком коротка, чтобы таскать её с собой
+            </blockquote>
+            <blockquote class="quote">
+                - Я сделал это не для себя. Я сделал это для тебя
+            </blockquote>
+        </section>
+
+        <section>
+            <h2>Расписание матчей Вест Хэм Юнайтед (West Ham United) на февраль-март</h2>
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th>Дата</th>
+                        <th>Соперник</th>
+                        <th>Время</th>
+                        <th>Счет</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Февраль 4, 2024</td>
+                        <td>Ливерпуль</td>
+                        <td>18:30</td>
+                        <td>3:1</td>
+                    </tr>
+                    <tr>
+                        <td>Февраль 11, 2024</td>
+                        <td>Вест Хэм Юнайтед</td>
+                        <td>16:00</td>
+                        <td>6:0</td>
+                    </tr>
+                    <tr>
+                        <td>Февраль 17, 2024</td>
+                        <td>Бернли</td>
+                        <td>17:00</td>
+                        <td>5:0</td>
+                    </tr>
+                    <tr>
+                        <td>Февраль 21, 2024</td>
+                        <td>Порту (Лига чемпионов)</td>
+                        <td>23:00</td>
+                        <td>1:0</td>
+                    </tr>
+                    <tr>
+                        <td>Февраль 24, 2024</td>
+                        <td>Ньюкасл Юнайтед</td>
+                        <td>23:00</td>
+                        <td>4:1</td>
+                    </tr>
+                    <tr>
+                        <td>Март 4, 2024</td>
+                        <td>Шеффилд Юнайтед</td>
+                        <td>23:00</td>
+                        <td>6:0</td>
+                    </tr>
+                    <tr>
+                        <td>Март 9, 2024</td>
+                        <td>Брентфорд</td>
+                        <td>20:30</td>
+                        <td>2:1</td>
+                    </tr>
+                    <tr>
+                        <td>Март 12, 2024</td>
+                        <td>Порту (Лига чемпионов)</td>
+                        <td>23:00</td>
+                        <td>1:0 (пен. 4:2)</td>
+                    </tr>
+                    <tr>
+                        <td>Март 31, 2024</td>
+                        <td>Манчестер Сити</td>
+                        <td>18:30</td>
+                        <td>0:0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Веб - Кринж</p>
+    </footer>
+
+    <script src="js/index.js"></script>
+</body>
+</html>
