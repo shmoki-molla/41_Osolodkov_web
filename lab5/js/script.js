@@ -15,7 +15,7 @@ class HeaderBlock extends Block {
     super();
     this.name = name;
     this.title = title;
-    this.photoUrl = photoUrl; // Новое свойство для фото
+    this.photoUrl = photoUrl;
   }
 
   render() {
@@ -24,6 +24,7 @@ class HeaderBlock extends Block {
         <h1>${this.name}</h1>
         <p>${this.title}</p>
         ${this.photoUrl ? `<img src="${this.photoUrl}" alt="Фото" class="header-photo">` : ''}
+        <button id="toggle-edit-mode">Включить редактирование</button>
       </div>
     `;
   }
@@ -119,12 +120,26 @@ class HobbiesBlock extends Block {
   }
 }
 
+const saveBlocks = () => {
+  localStorage.setItem('blocks', JSON.stringify(blocks));
+};
+
+
+const loadBlocks = () => {
+  const savedBlocks = localStorage.getItem('blocks');
+  if (savedBlocks) {
+    blocks = JSON.parse(savedBlocks);
+  }
+};
+
+let editMode = false; 
+
 function buildSite() {
   const blocks = [
     new HeaderBlock(
       "Элеонора Кольцова",
       "Заведующий кафедрой (Кафедра информационных компьютерных технологий)",
-      "img/эдна.jpg" 
+      "img/эдна.jpg"
     ),
     new PhotoBlock("img/Koltsova-E.M.jpg", [
       "📌 Москва, ул. Героев Панфиловцев, 20",
@@ -150,11 +165,80 @@ function buildSite() {
   const container = document.createElement("div");
   container.className = "container";
 
-  blocks.forEach(block => {
-    container.innerHTML += block.render();
-  });
+  // Функция для перерисовки блоков
+  const renderBlocks = () => {
+    container.innerHTML = ''; 
+    blocks.forEach((block, index) => {
+      const blockHtml = block.render();
+      const blockElement = document.createElement('div');
+      blockElement.innerHTML = blockHtml;
 
+      if (editMode) {
+        const editButton = document.createElement('button');
+        editButton.textContent = 'Редактировать';
+        editButton.addEventListener('click', () => editBlock(index));
+        blockElement.appendChild(editButton);
+
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Удалить';
+        deleteButton.addEventListener('click', () => deleteBlock(index));
+        blockElement.appendChild(deleteButton);
+      }
+
+      container.appendChild(blockElement);
+    });
+
+    // Кнопка для добавления нового блока
+    if (editMode) {
+      const addBlockButton = document.createElement('button');
+      addBlockButton.textContent = 'Добавить блок';
+      addBlockButton.addEventListener('click', addNewBlock);
+      container.appendChild(addBlockButton);
+    }
+  };
+
+  // Функция для редактирования блока
+  const editBlock = (index) => {
+    const block = blocks[index];
+    const newContent = prompt('Введите новое содержимое блока:', JSON.stringify(block));
+    if (newContent) {
+      Object.assign(block, JSON.parse(newContent));
+      renderBlocks();
+    }
+  };
+
+  // Функция для удаления блока
+  const deleteBlock = (index) => {
+    blocks.splice(index, 1);
+    renderBlocks();
+  };
+
+  // Функция для добавления нового блока
+  const addNewBlock = () => {
+    const newBlock = new AboutBlock(['Новый блок']);
+    blocks.push(newBlock);
+    renderBlocks();
+  };
+
+  // Переключатель режима редактирования
+  const toggleEditMode = () => {
+    editMode = !editMode; 
+    renderBlocks();
+
+    const toggleButton = document.getElementById('toggle-edit-mode');
+    if (toggleButton) {
+      toggleButton.textContent = editMode ? 'Отключить редактирование' : 'Включить редактирование';
+    }
+  };
+
+  renderBlocks();
   body.appendChild(container);
+
+  document.addEventListener('click', (event) => {
+    if (event.target.id === 'toggle-edit-mode') {
+      toggleEditMode();
+    }
+  });
 }
 
 window.onload = buildSite;
