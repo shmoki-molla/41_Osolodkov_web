@@ -1,4 +1,3 @@
-// js/main.js
 import WeatherAPI from './api/WeatherAPI.js';
 import QuotesAPI from './api/QuotesAPI.js';
 import TasksAPI from './api/TasksAPI.js';
