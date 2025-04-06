@@ -1,15 +1,16 @@
 import axios from 'axios'
 
-const API_KEY = '9dde149b1434441a8fcb3f338ebb4f46' // Замените на реальный ключ от NewsAPI
-const BASE_URL = 'https://newsapi.org/v2/top-headlines'
+const API_KEY = '9dde149b1434441a8fcb3f338ebb4f46'
+const BASE_URL = 'https://newsapi.org/v2/everything'
 
 export default {
   async getTechNews() {
     try {
       const response = await axios.get(BASE_URL, {
         params: {
-          country: 'ru',
-          category: 'technology',
+          q: 'tesla',
+          from: '2025-03-06',
+          sortBy: 'publishedAt',
           apiKey: API_KEY,
           pageSize: 10
         }

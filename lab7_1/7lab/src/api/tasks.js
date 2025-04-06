@@ -6,7 +6,7 @@ let tasks = [
 export default {
   async getTasks() {
     return new Promise(resolve => {
-      setTimeout(() => resolve([...tasks]), 300) // Имитация задержки сети
+      setTimeout(() => resolve([...tasks]), 300) 
     })
   },
   async addTask(task) {

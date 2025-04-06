@@ -20,18 +20,23 @@
 </template>
 
 <script>
-import weatherAPI from '../api/weather'
+import { useApiStore } from '@/stores/apiStore'
 
 export default {
-  data() {
-    return {
-      weather: null,
-      loading: true
-    }
+  setup() {
+    const apiStore = useApiStore()
+    return { apiStore }
   },
   async created() {
-    this.weather = await weatherAPI.getMoscowWeather()
-    this.loading = false
+    await this.apiStore.fetchWeather()
+  },
+  computed: {
+    weather() {
+      return this.apiStore.weather
+    },
+    loading() {
+      return this.apiStore.loading
+    }
   }
 }
 </script>

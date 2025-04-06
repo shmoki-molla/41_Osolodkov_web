@@ -2,20 +2,48 @@
   <div class="news-feed">
     <h2>Последние новости технологий</h2>
     
-    <div v-if="loading" class="loader">
+    <!-- Статус загрузки -->
+    <div v-if="apiStore.loading" class="loader">
       <div class="spinner"></div>
       <p>Загрузка новостей...</p>
     </div>
     
+    <!-- Ошибка загрузки -->
+    <div v-else-if="apiStore.error" class="error-message">
+      Ошибка: {{ apiStore.error }}
+    </div>
+    
+    <!-- Проверка наличия данных в хранилище -->
+    <div v-else-if="!hasArticles" class="no-data">
+      Новости не найдены. Попробуйте обновить страницу.
+    </div>
+    
+    <!-- Проверка валидности полученных данных -->
     <div v-else class="news-grid">
-      <div v-for="(article, index) in articles" :key="index" class="news-card">
-        <h3>{{ article.title }}</h3>
-        <img v-if="article.urlToImage" :src="article.urlToImage" :alt="article.title">
+      <div v-for="(article, index) in validArticles" :key="index" class="news-card">
+        <h3>{{ article.title || 'Без названия' }}</h3>
+        <img 
+          v-if="article.urlToImage" 
+          :src="article.urlToImage" 
+          :alt="article.title"
+          @error="handleImageError"
+        >
+        <img v-else src="https://via.placeholder.com/300x200?text=No+Image" alt="Нет изображения">
         <div class="content">
           <p>{{ article.description || 'Нет описания' }}</p>
           <div class="footer">
-            <a :href="article.url" target="_blank">Читать далее</a>
-            <span class="source">{{ article.source.name }}</span>
+            <a 
+              v-if="article.url" 
+              :href="article.url" 
+              target="_blank" 
+              rel="noopener"
+            >
+              Читать далее
+            </a>
+            <span v-else>Ссылка недоступна</span>
+            <span class="source">
+              {{ article.source?.name || 'Источник неизвестен' }}
+            </span>
           </div>
         </div>
       </div>
@@ -24,23 +52,47 @@
 </template>
 
 <script>
-import newsAPI from '../api/news'
+import { useApiStore } from '@/stores/apiStore'
+import { computed } from 'vue'
 
 export default {
-  data() {
-    return {
-      articles: [],
-      loading: true
+  methods: {
+    handleImageError(e) {
+      e.target.src = 'https://via.placeholder.com/300x200?text=No+Image'
     }
   },
-  async created() {
-    this.articles = await newsAPI.getTechNews()
-    this.loading = false
+  setup() {
+    const apiStore = useApiStore()
+    
+    // Загружаем новости при создании компонента
+    if (!apiStore.articles.length) {
+      apiStore.fetchNews()
+    }
+
+    // Проверяем наличие данных в хранилище
+    const hasArticles = computed(() => {
+      return apiStore.articles?.length > 0
+    })
+
+    // Фильтруем только статьи с минимально необходимыми данными
+    const validArticles = computed(() => {
+      return apiStore.articles.filter(article => {
+        return article && (article.title || article.description)
+      })
+    })
+
+    return { 
+      apiStore,
+      hasArticles,
+      validArticles
+    }
   }
 }
 </script>
 
+
 <style scoped>
+/* Стили остаются без изменений */
 .news-feed {
   padding: 20px;
   max-width: 1200px;

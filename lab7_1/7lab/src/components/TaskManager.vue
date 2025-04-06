@@ -25,9 +25,9 @@
       <ul v-else class="task-list">
         <li v-for="task in tasks" :key="task.id" :class="{ completed: task.completed }">
           <div class="task-content">
-            <input 
-              type="checkbox" 
-              v-model="task.completed" 
+            <input
+              type="checkbox"
+              v-model="task.completed"
               @change="updateTask(task)"
             >
             <span class="title">{{ task.title }}</span>
@@ -48,8 +48,8 @@
       <div class="modal-content">
         <h3>Редактирование задачи</h3>
         <input 
-          v-model="editingTask.title" 
-          ref="editInput"
+          v-model="editingTask.title"
+          v-focus
           @keyup.enter="saveEdit"
         >
         <div class="modal-actions">
@@ -62,85 +62,53 @@
 </template>
 
 <script>
-import taskAPI from '../api/tasks'
+import { useApiStore } from '@/stores/apiStore'
 
 export default {
   data() {
     return {
-      tasks: [],
       newTask: { title: '', completed: false },
-      loading: true,
-      editingTask: null,
-      error: null
+      editingTask: null
     }
   },
+  setup() {
+    const apiStore = useApiStore()
+    return { apiStore }
+  },
   async created() {
-    await this.fetchTasks()
+    await this.apiStore.fetchTasks()
+  },
+  computed: {
+    tasks() {
+      return this.apiStore.tasks
+    },
+    loading() {
+      return this.apiStore.loading
+    }
   },
   methods: {
-    async fetchTasks() {
-      try {
-        this.tasks = await taskAPI.getTasks()
-      } catch (error) {
-        console.error('Ошибка загрузки задач:', error)
-        this.error = 'Не удалось загрузить задачи'
-      } finally {
-        this.loading = false
-      }
-    },
     async addTask() {
       if (!this.newTask.title.trim()) return
-      
-      try {
-        const task = await taskAPI.addTask(this.newTask)
-        this.tasks.unshift(task)
-        this.newTask.title = ''
-      } catch (error) {
-        console.error('Ошибка добавления:', error)
-        alert('Не удалось добавить задачу')
-      }
+      await this.apiStore.addTask(this.newTask)
+      this.newTask.title = ''
     },
     async updateTask(task) {
-      try {
-        await taskAPI.updateTask(task)
-      } catch (error) {
-        console.error('Ошибка обновления:', error)
-        task.completed = !task.completed // Откатываем изменение
-        alert('Не удалось обновить задачу')
-      }
+      await this.apiStore.updateTask(task)
     },
     async deleteTask(id) {
       if (!confirm('Удалить задачу?')) return
-      
-      try {
-        await taskAPI.deleteTask(id)
-        this.tasks = this.tasks.filter(t => t.id !== id)
-      } catch (error) {
-        console.error('Ошибка удаления:', error)
-        alert('Не удалось удалить задачу')
-      }
+      await this.apiStore.deleteTask(id)
     },
     editTask(task) {
       this.editingTask = { ...task }
-      this.$nextTick(() => {
-        this.$refs.editInput.focus()
-      })
     },
     async saveEdit() {
       if (!this.editingTask.title.trim()) {
         alert('Название задачи не может быть пустым')
         return
       }
-      
-      try {
-        await taskAPI.updateTask(this.editingTask)
-        const index = this.tasks.findIndex(t => t.id === this.editingTask.id)
-        this.tasks.splice(index, 1, this.editingTask)
-        this.editingTask = null
-      } catch (error) {
-        console.error('Ошибка сохранения:', error)
-        alert('Не удалось сохранить изменения')
-      }
+      await this.apiStore.updateTask(this.editingTask)
+      this.editingTask = null
     },
     cancelEdit() {
       this.editingTask = null
@@ -150,6 +118,7 @@ export default {
 </script>
 
 <style scoped>
+/* Стили остаются без изменений */
 .task-manager {
   max-width: 600px;
   margin: 0 auto;
